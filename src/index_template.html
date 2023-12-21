@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023 Wrapped</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .header { text-align: center; }
+        .button-container { text-align: center; margin-top: 20px; }
+        .button { display: inline-block; padding: 10px 20px; margin: 5px; background-color: #007bff; color: white; text-decoration: none; }
+        .button_top { display: inline-block; padding: 10px 20px; margin: 5px; background-color: #ffe600; color: black; text-decoration: none; }
+        .button_heat {display: inline-block; padding: 10px 20px; margin: 5px; background-color: #da218d; color: white; text-decoration: none; }
+        .section { margin-top: 50px; }
+        .awards-container { display: flex; justify-content: space-between; }
+        .award-column { flex: 1; padding: 0 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>2023 Wrapped</h1>
+        <h2><!-- Subtitle here --></h2>
+    </div>
+
+    <div class="button-container">
+        <a href="#awards" class="button_top">🏆 Awards</a>
+        <a href="#weekly-sports" class="button">Weekdays statistics</a>
+        <!-- <a href="#weekly-reading" class="button">Weekly Reading Distribution</a>
+        <a href="#weekly-sobriety" class="button">Weekly Sobriety Distribution</a>
+        <a href="#weekly-sobriety" class="button">Weekly Sobriety Distribution</a> -->
+        <a href="#table" class="button">Months statistics</a>
+        <a href="#heatmap" class="button_heat">Semantic analysis</a>
+    </div>
+
+    <div id="overall-stats" class="section">
+        <h3>Overall Statistics</h3>
+        <p>Total Days of Sports: {{ total_days_sport }}</p>
+        <p>Total Days of Literature: {{ total_days_reading }}</p>
+        <p>Total Days of Sobriety: {{ total_days_sober }}</p>
+        <p>Total Days of Drunkenness: {{ total_days_drunk }}</p>
+        <p>Most Sober Month: <!--  --></p>
+        <!-- ... -->
+    </div>
+    <br></br>
+
+        <div id="awards" class="awards-container">
+            <div class="award-column">
+                <h3>🏆 Awards</h3>
+                <p>Most Sober Month: <b>{{ top_sober_month }}</b></p>
+                <p>Most Sporty Month: <b>{{ top_sport_month }}</b></p>
+                <p>Most Reading Month: <b>{{ top_reading_month }}</b></p>
+            </div>
+       
+            <div class="award-column">
+                <h3>💔 Anti Awards</h3>
+                <p>Least Sober Month: <b>{{ top_drunk_month }}</b></p>
+                <p>Least Sporty Month: <b>{{ top_lazy_month }}</b></p>
+                <p>Least Reading Month: <b>{{ top_stupid_month }}</b> </p>
+            </div>
+        </div>
+
+
+    <div id="weekly-sports" class="section">
+        <h3>Weekly Sports Distribution</h3>
+        <iframe src="/src/resources/weekdays_sports.html" width="100%" height="400"></iframe>
+    </div>
+
+    <div id="weekly-reading" class="section">
+        <h3>Weekly Reading Distribution</h3>
+        <!-- /Users/nikitaskrypchenko/Documents/projects/lify/src/resources/weekdays_literature reading.html -->
+        <iframe src="/src/resources/weekdays_literature reading.html" width="100%" height="400"></iframe>
+    </div>
+
+    <div id="weekly-sobriety" class="section">
+        <h3>Weekly Sobriety Distribution</h3>
+        <iframe src="/src/resources/weekdays_sobber.html" width="100%" height="400"></iframe>
+        <h3>Weekly Drunkenness Distribution</h3>
+        <iframe src="/src/resources/weekdays_drunk.html" width="100%" height="400"></iframe>
+    </div>
+    
+    <div class="section">
+        <h3>Months rating</h3>
+    </div>
+    <table id="table" class="display">
+        <thead>
+            <tr>
+                <th>Month</th>
+                <th>Sports</th>
+                <th>Literature</th>
+                <th>Sober</th>
+                <th>Drunk</th>
+                <th>Total Activities</th>
+            </tr>
+        </thead>
+    </table>
+    <div class="section">
+        <iframe src="/src/resources/by_months.html" width="100%" height="400"></iframe>
+    </div>
+    <div id="heatmap" class="section">
+        <h3>Semantic analysis heatmap</h3>
+        <iframe src="/src/resources/heatmap.html" width="100%" height="600"></iframe>
+    </div>
+
+    <div id="happy_index" class="section">
+        <h3>Index of happiness</h3>
+        <iframe src="/src/resources/happy_index.html" width="100%" height="400"></iframe>
+        <p>Happiest Day: <b>{{ top_happy_day }}</b></p>
+        <p>The Most Depressive Day: <b>{{ top_depressive_day }}</b></p>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var data = JSON.parse(`{{json_data}}`);
+
+            $('#table').DataTable({
+                data: data,
+                columns: [
+                { data: 'Date' },
+                    { data: 'Sports' },
+                    { data: 'Reading' },
+                    { data: 'Sober' },
+                    { data: 'Drunk' },
+                    { data: 'Total Score' }
+                ],
+                paging: false,
+                searching: false
+            });
+        });
+    </script>
+
+</body>
+</html>
