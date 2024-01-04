@@ -23,7 +23,8 @@ input_csv_files = [
     'csvs/August.csv',
     'csvs/September.csv',
     'csvs/October.csv',
-    'csvs/November.csv'
+    'csvs/November.csv',
+    'csvs/December.csv'
 ]
 
 md_directory = 'mds' 
